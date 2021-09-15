@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+
 class Transaction {
   final String itemID;
   final String title;
@@ -8,3 +9,4 @@ class Transaction {
 
   Transaction({required this.title, required this.itemID, required this.date, required this.price });
 }
+

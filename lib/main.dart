@@ -1,6 +1,8 @@
 import 'package:expense_planner/trasanction.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'trasanction.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(const MyApp());
 
@@ -46,7 +48,7 @@ class MyHomePage extends StatelessWidget {
           const Card(
             color: Colors.lightBlueAccent,
             child: Center(
-              child: Text('CHART'),
+              child: Text('TRANSACTIONS MADE'),
             ),
           ),
           Column(
@@ -64,10 +66,17 @@ class MyHomePage extends StatelessWidget {
                       width: 2,
                     ),
                   ),
-                  child: Text(tx.price.toString()),
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    '\$${tx.price}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        color: Colors.purple),
+                  ),
                 ),
                 title: Text(tx.title),
-                subtitle: Text(tx.date.toString()),
+                subtitle: Text(DateFormat.yMMMd().format(tx.date)),
               ),
             );
           }).toList()),
