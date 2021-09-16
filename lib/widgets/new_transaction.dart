@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'user_transactions.dart';
 
 class NewTransaction extends StatelessWidget {
    NewTransaction({Key? key, required this.addTx}) : super(key: key);
@@ -7,6 +6,19 @@ class NewTransaction extends StatelessWidget {
   final itemController = TextEditingController();
   final priceController = TextEditingController();
   final Function addTx ;
+
+
+  void submitData (){
+    
+    final enteredTitle = itemController.text;
+    final enteredAmount = double.parse(priceController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0){
+      return;
+    }
+    
+    addTx(enteredTitle, enteredAmount,);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +29,10 @@ class NewTransaction extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end ,
           children:  [
-            TextField(decoration: const InputDecoration(labelText: 'Item'),controller: itemController,),
-            TextField(decoration: const InputDecoration(labelText: 'Price'),controller: priceController,),
+            TextField(decoration: const InputDecoration(labelText: 'Item'),controller: itemController,onSubmitted: (_val) => submitData(),),
+            TextField(decoration: const InputDecoration(labelText: 'Price'),controller: priceController, keyboardType: TextInputType.number,onSubmitted: (_val) => submitData(),),
             TextButton(onPressed: () {
-                addTx(itemController.text, double.parse(priceController.text));
+                submitData();
               },
               child: const Text('Add Transaction',),),
           ],

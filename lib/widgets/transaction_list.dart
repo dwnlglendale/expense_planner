@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 
 class TransactionList extends StatelessWidget {
-   TransactionList({Key? key, required this.transactions}) : super(key: key);
+   const TransactionList({Key? key, required this.transactions}) : super(key: key);
 
    final List<Transaction> transactions;
 
@@ -29,7 +29,7 @@ class TransactionList extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  '\$${tx.price}',
+                  '\$${tx.price.toStringAsFixed(2)}',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 10,
