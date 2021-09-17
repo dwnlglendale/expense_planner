@@ -30,10 +30,10 @@ class TransactionList extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   '\$${tx.price.toStringAsFixed(2)}',
-                  style: const TextStyle(
+                  style:  TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 10,
-                      color: Colors.purple),
+                      color: Theme.of(context).primaryColorDark),
                 ),
               ),
               title: Text(tx.title),
@@ -43,3 +43,4 @@ class TransactionList extends StatelessWidget {
         }).toList());
   }
 }
+
