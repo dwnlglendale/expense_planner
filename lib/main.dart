@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'QuickSand',
           appBarTheme: AppBarTheme(
             textTheme: ThemeData.light().textTheme.copyWith(
-                  subtitle1: const TextStyle(fontFamily: 'OpenSans'),
+                  subtitle1: const TextStyle(fontFamily: 'OpenSans', fontSize: 10,),
                 ),
           ),
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
@@ -38,17 +38,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      title: 'Converse',
-      itemID: 's001',
-      date: DateTime.now(),
-      price: 99.99,
-    ),
-    Transaction(
-        title: 'Vans Old School',
-        itemID: 's002',
-        date: DateTime.now(),
-        price: 59.99),
+    // Transaction(
+    //   title: 'Converse',
+    //   itemID: 's001',
+    //   date: DateTime.now(),
+    //   price: 99.99,
+    // ),
+    // Transaction(
+    //     title: 'Vans Old School',
+    //     itemID: 's002',
+    //     date: DateTime.now(),
+    //     price: 59.99),
   ];
 
   //function to add user input
