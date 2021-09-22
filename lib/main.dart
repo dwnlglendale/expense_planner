@@ -1,8 +1,10 @@
+import 'package:expense_planner/widgets/chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './widgets/new_transaction.dart';
 import './models/transaction.dart';
 import './widgets/transaction_list.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(const MyApp());
 
@@ -51,6 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
     //     price: 59.99),
   ];
 
+  List <Transaction> get _recentTransactions {
+    return _userTransactions.where((tx){
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }
+    ).toList();
+  }
+
   //function to add user input
   void _addNewTransaction(String txItem, double txPrice) {
     final newTx = Transaction(
@@ -94,12 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Card(
-              color: Colors.lightBlueAccent,
-              child: Center(
-                child: Text('TRANSACTIONS MADE'),
-              ),
-            ),
+            Chart(recentTransactions: _recentTransactions),
             TransactionList(transactions: _userTransactions)
           ],
         ),
