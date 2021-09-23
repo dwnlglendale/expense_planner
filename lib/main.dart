@@ -6,6 +6,7 @@ import './models/transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return _userTransactions.where((tx){
       return tx.date.isAfter(
         DateTime.now().subtract(
-          Duration(days: 7),
+         const Duration(days: 7),
         ),
       );
     }

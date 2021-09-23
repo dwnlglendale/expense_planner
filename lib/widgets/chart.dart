@@ -1,14 +1,14 @@
 import 'package:expense_planner/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'chart_bar.dart';
 
 class Chart extends StatelessWidget {
   const Chart({Key? key, required this.recentTransactions}) : super(key: key);
 
   final List<Transaction> recentTransactions;
 
-  List <Map <String, Object>> get groupedTransactionValues {
+  List <Map <String, dynamic>> get groupedTransactionValues {
     return List.generate(7, (index){
       final weekDay = DateTime.now().subtract(Duration(days: index), );
       var totalSum = 0.0;
@@ -23,20 +23,29 @@ class Chart extends StatelessWidget {
         }
       }
 
-      print(DateFormat.E(weekDay));
+      print(DateFormat.E().format(weekDay));
       print(totalSum);
 
       return {
-        'day': DateFormat.E(weekDay), 'amount': totalSum,};
+        'day': DateFormat.E().format(weekDay), 'amount': totalSum,};
     });
   }
+
+  double get totalSpending{
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['amount'];
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return  Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
-      child: Row(children: [],),
+      child: Row(children: groupedTransactionValues.map((data){
+        return ChartBar(label: data['day'].toString(), spendingAmount: data['amount'], spendingPctOfTotal: totalSpending,);
+      }).toList(),),
     );
   }
 }
