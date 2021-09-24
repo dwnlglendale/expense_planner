@@ -22,6 +22,7 @@ class TransactionList extends StatelessWidget {
                 ],
               )
             : Card(
+          elevation: 6,
                 child: ListTile(
                   leading: Container(
                     margin: const EdgeInsets.symmetric(
@@ -35,12 +36,14 @@ class TransactionList extends StatelessWidget {
                       ),
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: Text(
-                      '\$${tx.price.toStringAsFixed(2)}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: Theme.of(context).primaryColorDark),
+                    child: FittedBox(
+                      child: Text(
+                        '\$${tx.price.toStringAsFixed(2)}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: Theme.of(context).primaryColorDark),
+                      ),
                     ),
                   ),
                   title: Text(tx.title),
