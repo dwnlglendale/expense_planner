@@ -18,11 +18,12 @@ class _NewTransactionState extends State<NewTransaction> {
    DateTime? _selectedDate;
 
   void _submitData() {
+     if(priceController.text.isEmpty){return;}
     final _enteredTitle = itemController.text;
     final _enteredAmount = double.parse(priceController.text);
 
 
-    if (_enteredTitle.isEmpty || _enteredAmount <= 0) {
+    if (_enteredTitle.isEmpty || _enteredAmount <= 0 || _selectedDate == null) {
       return;
     }
 
@@ -74,11 +75,11 @@ class _NewTransactionState extends State<NewTransaction> {
               height: 10,
             ),
             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text( _selectedDate == null ? 'No Date Chosen' :'Picked Date: ${DateFormat.yMMMd().format(_selectedDate!)}' ),
+                 Expanded(child: Text( _selectedDate == null ? 'No Date Chosen' :'Picked Date: ${DateFormat.yMMMd().format(_selectedDate!)}' )),
                 TextButton(
-                  child: Text(
+                  child: Text (
                     'Choose Date',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,

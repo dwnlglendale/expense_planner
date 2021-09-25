@@ -66,11 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   //function to add user input
-  void _addNewTransaction(String txItem, double txPrice) {
+  void _addNewTransaction(String txItem, double txPrice, DateTime chosenDate) {
     final newTx = Transaction(
         title: txItem,
         itemID: DateTime.now().toString(),
-        date: DateTime.now(),
+        date: chosenDate,
         price: txPrice);
 
     setState(() {
@@ -91,6 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
+  
+  void _deleteTransaction(String itemID) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.itemID == itemID);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Chart(recentTransactions: _recentTransactions),
-            TransactionList(transactions: _userTransactions)
+            TransactionList(transactions: _userTransactions, deleteTx: _deleteTransaction,)
           ],
         ),
       ),
