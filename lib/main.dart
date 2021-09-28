@@ -1,13 +1,21 @@
-import 'package:expense_planner/widgets/chart.dart';
+import 'dart:io';
+
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:expense_planner/widgets/chart.dart';
 import './widgets/new_transaction.dart';
 import './models/transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 
-
-void main() => runApp(const MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -22,7 +30,10 @@ class MyApp extends StatelessWidget {
           fontFamily: 'QuickSand',
           appBarTheme: AppBarTheme(
             textTheme: ThemeData.light().textTheme.copyWith(
-                  subtitle1: const TextStyle(fontFamily: 'OpenSans', fontSize: 10,),
+                  subtitle1: const TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 10,
+                  ),
                 ),
           ),
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
@@ -54,15 +65,16 @@ class _MyHomePageState extends State<MyHomePage> {
     //     price: 59.99),
   ];
 
-  List <Transaction> get _recentTransactions {
-    return _userTransactions.where((tx){
+  bool _showChart = false;
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
-         const Duration(days: 7),
+          const Duration(days: 7),
         ),
       );
-    }
-    ).toList();
+    }).toList();
   }
 
   //function to add user input
@@ -91,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
-  
+
   void _deleteTransaction(String itemID) {
     setState(() {
       _userTransactions.removeWhere((tx) => tx.itemID == itemID);
@@ -114,15 +126,34 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Chart(recentTransactions: _recentTransactions),
-            TransactionList(transactions: _userTransactions, deleteTx: _deleteTransaction,)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Show Chart'),
+                Switch.adaptive(
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    }),
+              ],
+            ),
+            _showChart
+                ? Chart(recentTransactions: _recentTransactions)
+                : TransactionList(
+                    transactions: _userTransactions,
+                    deleteTx: _deleteTransaction,
+                  )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _startAddNewTransaction(context),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () => _startAddNewTransaction(context),
+              child: const Icon(Icons.add),
+            ),
     );
   }
 }
